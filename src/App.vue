@@ -1,12 +1,56 @@
 <script setup>
 import { RouterView } from 'vue-router'
+
+</script>
+
+<script>
 import MainHeader from '@/components/MainHeader.vue'
+import axios from '@/axiosConfig.js'
+
+export default {
+  data () {
+    return {
+      loginLoading: false
+    }
+  },
+  mounted () {
+    this.simulateLogin()
+  },
+  methods: {
+    simulateLogin() {
+      // setup credentials or warn user to provide them
+      const hardcodedUsername = localStorage.getItem('username')
+      const hardcodedPassword = localStorage.getItem('password')
+      if (!hardcodedUsername || !hardcodedPassword) {
+        console.error('Please, add password and username to the local storage')
+        return
+      }
+
+      this.loginLoading = true
+
+      // reset previous token
+      localStorage.setItem('token', '')
+
+      axios.post('login_check', {
+        _username: hardcodedUsername,
+        _password: hardcodedPassword
+      }).then(r => {
+        if (r.data?.token) localStorage.setItem('token', r.data.token)
+      }).catch(e => {
+        console.log(e)
+      }).finally(() => { 
+        this.loginLoading = false
+      })
+    }
+  }
+}
 </script>
 
 <template>
   <MainHeader />
+  <div v-if="loginLoading">Logging in...</div>
 
-  <RouterView />
+  <RouterView v-else />
 </template>
 
 <style>

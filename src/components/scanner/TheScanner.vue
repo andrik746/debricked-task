@@ -1,6 +1,10 @@
-<script setup>
-//import ChildComponent from './ChildComponent.vue'
+<script>
 
+export default {
+  created () {
+    console.log('scanner')
+  }
+}
 </script>
 
 <template>
