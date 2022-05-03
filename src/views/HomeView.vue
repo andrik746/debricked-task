@@ -1,9 +1,9 @@
 <script setup>
-import TheWelcome from '@/components/TheWelcome.vue'
+import TheScanner from '@/components/scanner/TheScanner.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <TheScanner />
   </main>
 </template>
