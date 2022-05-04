@@ -26,11 +26,9 @@ export default {
         //   url: 'http://www.baidu.com/zzz.png',
         // }
       ],
-      uploading: false
+      uploading: false,
+      uploadId: ''
     }
-  },
-  created () {
-    console.log('scanner')
   },
   methods: {
     beforeUpload (file) {
@@ -46,7 +44,7 @@ export default {
     },
     handleUpload () {
       const formData = new FormData()
-      
+
       formData.append('repositoryName', 'unknown')
       formData.append('commitName', 'unknown')
 
@@ -58,6 +56,8 @@ export default {
 
       axios.post('1.0/open/uploads/dependencies/files', formData).then(r => {
         console.log(r)
+        this.uploadId = r.data.ciUploadId
+        console.log(this.uploadId)
       }).catch(e => {
         console.log(e)
       }).finally(() => {
@@ -75,30 +75,59 @@ export default {
       //   uploading.value = false;
       //   message.error('upload failed.');
       // });
+    },
+
+    checkStatus () {
+      axios.get('1.0/open/ci/upload/status', {
+        params: { ciUploadId: this.uploadId }
+      }).then(r => {
+        console.log(r)
+      }).catch(e => {
+        console.log(e)
+      })
+    },
+
+    concludeUpload () {
+      axios.post('1.0/open/finishes/dependencies/files/uploads', {
+        "ciUploadId": this.uploadId,
+        "repositoryName": 'unknown',
+        "commitName": 'unknown',
+      }).then(r => {
+        console.log(r)
+      }).catch(e => {
+        console.log(e)
+      })
     }
   }
 }
 </script>
 
 <template>
-  <div>Scanner</div>
-  
+  <h1>Scanner</h1>
+
+  <div class="scanner--label"><label>Upload one or more dependency files</label></div>
   <a-upload :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
+
     <a-button>
       <upload-outlined></upload-outlined>
-      Select File
+      Select Files
     </a-button>
+    
   </a-upload>
+
   <a-button
     type="primary"
     :disabled="fileList.length === 0"
     :loading="uploading"
-    style="margin-top: 16px"
+    style="margin-left: 1rem"
     @click="handleUpload"
   >
     {{ uploading ? 'Uploading' : 'Start Upload' }}
   </a-button>
+  
 
+  <a-button @click="concludeUpload">Conclude</a-button>
+  <a-button @click="checkStatus">Check status</a-button>
 
   <a-progress :percent="30" />
 
@@ -115,5 +144,7 @@ export default {
 </template>
 
 <style>
-
+.scanner--label {
+  margin-bottom: 0.5rem;
+}
 </style>
