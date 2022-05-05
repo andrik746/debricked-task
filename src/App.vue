@@ -5,7 +5,8 @@ import { RouterView } from 'vue-router'
 
 <script>
 import MainHeader from '@/components/MainHeader.vue'
-import axios from '@/axiosConfig.js'
+import {simulateLoginRequest} from '@/services/LoginService'
+import handleError from '@/utils/handleError'
 
 export default {
   data () {
@@ -18,30 +19,19 @@ export default {
     this.initUserStyles()
   },
   methods: {
-    simulateLogin() {
-      // setup credentials or warn user to provide them
-      const hardcodedUsername = localStorage.getItem('username')
-      const hardcodedPassword = localStorage.getItem('password')
-      if (!hardcodedUsername || !hardcodedPassword) {
-        console.error('Please, add password and username to the local storage')
-        return
-      }
+    async simulateLogin() {
+      try {
+        // reset previous token
+        localStorage.setItem('token', '')
+        this.loginLoading = true
 
-      this.loginLoading = true
-
-      // reset previous token
-      localStorage.setItem('token', '')
-
-      axios.post('login_check', {
-        _username: hardcodedUsername,
-        _password: hardcodedPassword
-      }).then(r => {
-        if (r.data?.token) localStorage.setItem('token', r.data.token)
-      }).catch(e => {
-        console.log(e)
-      }).finally(() => { 
+        const response = await simulateLoginRequest()
+        if (response.data?.token) localStorage.setItem('token', response.data.token)
+      } catch (e) {
+        handleError(e)
+      } finally {
         this.loginLoading = false
-      })
+      }
     },
     initUserStyles () {
       document.documentElement.setAttribute('theme', localStorage.getItem('theme') || 'light')

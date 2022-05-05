@@ -1,6 +1,7 @@
 <script>
 import { UploadOutlined } from '@ant-design/icons-vue'
-import axios from '@/axiosConfig.js'
+import { uploadFileRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
+import handleError from '@/utils/handleError'
 
 export default {
   components: {
@@ -42,62 +43,31 @@ export default {
       newFileList.splice(index, 1)
       this.fileList = newFileList
     },
-    handleUpload () {
-      const formData = new FormData()
-
-      formData.append('repositoryName', 'unknown')
-      formData.append('commitName', 'unknown')
-
-      this.fileList.forEach(file => {
-        formData.append('fileData', file)
-      })
-
-      this.uploading = true
-
-      axios.post('1.0/open/uploads/dependencies/files', formData).then(r => {
-        console.log(r)
-        this.uploadId = r.data.ciUploadId
-        console.log(this.uploadId)
-      }).catch(e => {
-        console.log(e)
-      }).finally(() => {
+    async handleUpload () {
+      try {
+        this.uploading = true
+        const response = await uploadFileRequest(this.fileList)
+        this.uploadId = response.data.ciUploadId
+      } catch (e) {
+        handleError(e)
+      } finally {
         this.uploading = false
-      })
-
-      // request('https://www.mocky.io/v2/5cc8019d300000980a055e76', {
-      //   method: 'post',
-      //   data: formData,
-      // }).then(() => {
-      //   fileList.value = [];
-      //   uploading.value = false;
-      //   message.success('upload successfully.');
-      // }).catch(() => {
-      //   uploading.value = false;
-      //   message.error('upload failed.');
-      // });
+      }
     },
-
-    checkStatus () {
-      axios.get('1.0/open/ci/upload/status', {
-        params: { ciUploadId: this.uploadId }
-      }).then(r => {
-        console.log(r)
-      }).catch(e => {
-        console.log(e)
-      })
+    async concludeUpload () {
+      try {
+        await concludeUploadRequest(this.uploadId)
+      } catch (e) {
+        handleError(e)
+      }
     },
-
-    concludeUpload () {
-      axios.post('1.0/open/finishes/dependencies/files/uploads', {
-        "ciUploadId": this.uploadId,
-        "repositoryName": 'unknown',
-        "commitName": 'unknown',
-      }).then(r => {
-        console.log(r)
-      }).catch(e => {
-        console.log(e)
-      })
-    }
+    async checkUploadStatus () {
+      try {
+        await checkUploadStatusRequest(this.uploadId)
+      } catch (e) {
+        handleError(e)
+      }
+    },
   }
 }
 </script>
@@ -115,19 +85,19 @@ export default {
     
   </a-upload>
 
-  <a-button
-    type="primary"
-    :disabled="fileList.length === 0"
-    :loading="uploading"
-    style="margin-left: 1rem"
-    @click="handleUpload"
-  >
-    {{ uploading ? 'Uploading' : 'Start Upload' }}
-  </a-button>
-  
+  <div style="margin-top: 1rem;">
+    <a-button
+      type="primary"
+      :disabled="fileList.length === 0"
+      :loading="uploading"
+      @click="handleUpload"
+    >
+      {{ uploading ? 'Uploading' : 'Start Upload' }}
+    </a-button>
 
-  <a-button @click="concludeUpload">Conclude</a-button>
-  <a-button @click="checkStatus">Check status</a-button>
+    <a-button style="margin-left: 1rem" @click="concludeUpload">Conclude</a-button>
+    <a-button style="margin-left: 1rem" @click="checkUploadStatus">Check status</a-button>
+  </div>
 
   <a-progress :percent="30" />
 

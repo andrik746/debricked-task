@@ -5,13 +5,18 @@ import { RouterLink } from 'vue-router'
 
 <script>
 export default {
-  
+  computed: {
+    theme () {
+      return 'light'
+    }
+  }
 }
 </script>
 
 <template>
   <header>
-    <img src="@/assets/debricked-logo-light-theme.svg" />
+    <img :src="`src/assets/debricked-logo-${theme}-theme.svg`" />
+    
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/customizer">Customizer</RouterLink>

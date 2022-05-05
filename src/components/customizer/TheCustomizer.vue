@@ -15,7 +15,9 @@ export default {
   methods: {
     handleChange (value, key) {
       this[key] = value
+      // local storage is to keep the theme after page reloads
       localStorage.setItem(key, value)
+      // attribute change is for immediate css change
       document.documentElement.setAttribute(key, value)
     },
 
