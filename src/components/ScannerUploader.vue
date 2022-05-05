@@ -31,25 +31,29 @@ export default {
     },
     async handleUpload () {
       try {
+        this.uploading = true
         await this.uploadFile()
+
         // we send the 'conclude' request to inform the server that there will be no more files for current upload
         await this.concludeUpload()
-        this.emitter.emit('uploade-completed', this.uploadId)
-      } catch (e) {
-        handleError(e)
-      }
-    },
-    async uploadFile () {
-      try {
-        this.uploading = true
-        const response = await uploadFileRequest(this.fileList[0])
-        this.uploadId = response.data.ciUploadId
+
+        // let other component know that the upload is finished
+        this.emitter.emit('uploade-completed', { uploadId: this.uploadId, file: this.fileList[0] })
+        
         this.clearFileList()
       } catch (e) {
         handleError(e)
       } finally {
         this.uploading = false
       }
+    },
+    async uploadFile () {
+      try {
+        const response = await uploadFileRequest(this.fileList[0])
+        this.uploadId = response.data.ciUploadId
+      } catch (e) {
+        handleError(e)
+      } 
     },
     async concludeUpload () {
       try {
@@ -64,6 +68,8 @@ export default {
 </script>
 <template>
   <div class="scanner-uploader">
+    <h3 class="mb-1">Upload your dependency file</h3>
+    
     <a-upload  :file-list="fileList" :before-upload="onChange" @remove="clearFileList">
       <a-button>
         <upload-outlined></upload-outlined>

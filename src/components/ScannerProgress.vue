@@ -5,35 +5,68 @@ import getCssVariableValue from '@/utils/getCssVariableValue'
 
 export default {
   name: 'ScannerProgress',
+  data () {
+    return {
+      progressPercent: 0,
+      loading: false,
+    }
+  },
   computed: {
     barColor () {
       return getCssVariableValue('--active-color')
+    },
+    status () {
+      return this.progressPercent === 100 ? 'Scanning completed' : 'Scanning in progress...'
     }
   },
-  mounted () {
+  created () {
     this.emitter.on("uploade-completed", this.watchProgress)
   },
   beforeUnmount () {
     this.emitter.off("uploade-completed", this.watchProgress)
   },
   methods: {
-    watchProgress (uploadId) {
-
+    watchProgress ({uploadId, file}) {
+      this.checkUploadStatus({uploadId, file})
     },
-    async checkUploadStatus (uploadId) {
+    async checkUploadStatus ({uploadId, file}) {
       try {
-        await checkUploadStatusRequest(uploadId)
+        this.loading = true
+        const response = await checkUploadStatusRequest(uploadId)
+        this.progressPercent = response.data?.progress || 0
+        
+        if (this.progressPercent === 100) {
+          // if scanning is done
+          this.onStatusCheckingOver()
+
+          this.showResult({ result: response.data, file})
+        } else {
+          // check again later
+          this.timeout = setTimeout (() => {
+            this.checkUploadStatus({uploadId, file})
+          }, 1000)
+        }
       } catch (e) {
+        this.onStatusCheckingOver()
         handleError(e)
       }
     },
+    onStatusCheckingOver () {
+      clearTimeout(this.timeout)
+      this.loading = false
+    },
+    showResult({result, file}) {
+      console.log(file.name)
+      console.log(result.vulnerabilitiesFound)
+    }
   }
 }
 </script>
 
 <template>
   <div class="scanner-progress">
-    <a-progress :percent="30" :strokeColor="barColor" />
+    <h3 class="mb-1">{{status}}</h3>
+    <a-progress :percent="progressPercent" :strokeColor="barColor" />
   </div>
 </template>
 
