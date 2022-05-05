@@ -1,6 +1,6 @@
 <script>
 import { UploadOutlined } from '@ant-design/icons-vue'
-import { uploadFilesRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
+import { uploadFileRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
 import handleError from '@/utils/handleError'
 import getCssVariableValue from '@/utils/getCssVariableValue'
 
@@ -10,24 +10,7 @@ export default {
   },
   data () {
     return {
-      fileList: [
-        // {
-        //   uid: '1',
-        //   name: 'xxx.png',
-        //   status: 'done',
-        //   response: 'Server Error 500',
-        //   // custom error message to show
-        //   url: 'http://www.baidu.com/xxx.png',
-        // }, 
-        // {
-        //   uid: '2',
-        //   name: 'zzz.png',
-        //   status: 'error',
-        //   response: 'Server Error 500',
-        //   // custom error message to show
-        //   url: 'http://www.baidu.com/zzz.png',
-        // }
-      ],
+      fileList: [],
       uploading: false,
       uploadId: ''
     }
@@ -38,22 +21,34 @@ export default {
     }
   },
   methods: {
-    beforeUpload (file) {
-      // we need this method to stop the ui component from sending request ???
-      this.fileList = [...this.fileList, file]
+    onChange (file) {
+      // this method will be triggered every time we add a new file
+      // we will support only 1 file for MVP
+      this.fileList = [file]
+
+      // we need to retrun false to stop the default behavior of the ui component
+      // we will send our custom request instead
       return false
     },
-    handleRemove (file) {
-      const index = this.fileList.indexOf(file)
-      const newFileList = this.fileList.slice()
-      newFileList.splice(index, 1)
-      this.fileList = newFileList
+    clearFileList () {
+      // since we support only 1 file
+      this.fileList = []
     },
     async handleUpload () {
       try {
+        await this.uploadFile()
+        // we send the 'conclude' request to inform the server that there will be no more files for current upload
+        await this.concludeUpload()
+      } catch (e) {
+        handleError(e)
+      }
+    },
+    async uploadFile () {
+      try {
         this.uploading = true
-        const response = await uploadFilesRequest(this.fileList)
+        const response = await uploadFileRequest(this.fileList[0])
         this.uploadId = response.data.ciUploadId
+        this.clearFileList()
       } catch (e) {
         handleError(e)
       } finally {
@@ -62,6 +57,7 @@ export default {
     },
     async concludeUpload () {
       try {
+        if (!this.uploadId) throw new Error('Upload ID is missing!')
         await concludeUploadRequest(this.uploadId)
       } catch (e) {
         handleError(e)
@@ -83,7 +79,7 @@ export default {
     <h1>Scanner</h1>
 
     <h3 class="mb-1">Upload your dependency files</h3>
-    <a-upload  :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
+    <a-upload  :file-list="fileList" :before-upload="onChange" @remove="clearFileList">
       <a-button>
         <upload-outlined></upload-outlined>
         Select File
@@ -100,7 +96,6 @@ export default {
         {{ uploading ? 'Uploading' : 'Start Upload' }}
       </a-button>
 
-      <a-button class="mt-1" @click="concludeUpload">Conclude</a-button>
       <a-button class="mt-1" @click="checkUploadStatus">Check status</a-button>
     </div>
 
