@@ -8,7 +8,11 @@ export default {
   components: {
     UploadOutlined
   },
-  
+  data () {
+    return {
+      uploading: false
+    }
+  },
   methods: {
     addCustomUpload (file) {
       // this method will be triggered every time we select a new file
@@ -23,6 +27,8 @@ export default {
     },
     async handleUpload (file) {
       try {
+        this.uploading = true
+
         const response = await uploadFileRequest(file)
         const uploadId = response.data?.ciUploadId
         if (!uploadId) throw new Error('uploadId is missing')
@@ -34,6 +40,8 @@ export default {
         this.emitter.emit('uploade-completed', { uploadId, file })
       } catch (e) {
         handleError(e)
+      } finally {
+        this.uploading = false
       }
     }
   }
@@ -45,7 +53,7 @@ export default {
     
     
     <a-upload  :showUploadList="false" :before-upload="addCustomUpload"  >
-      <a-button>
+      <a-button :disabled="uploading" :loading="uploading">
         <upload-outlined></upload-outlined>
         Select File
       </a-button>

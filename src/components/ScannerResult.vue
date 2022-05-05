@@ -33,8 +33,8 @@ export default {
 </script>
 
 <template>
-  <div class="scanner-results">
-    <a-table v-if="results.length" :dataSource="results" :columns="columns" :pagination="false" />
+  <div class="scanner-results mt-1">
+    <a-table v-if="results.length" :dataSource="results.reverse()" :columns="columns" :pagination="false" />
   </div>
 
 </template>

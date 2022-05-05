@@ -16,9 +16,12 @@ export default {
     barColor () {
       return getCssVariableValue('--active-color')
     },
+    isScanningCompleted () {
+      return this.progressPercent === 100
+    },
     status () {
-      return this.progressPercent === 100 ? 'Scanning completed' : 'Scanning in progress...'
-    }
+      return this.isScanningCompleted ? 'Scanning completed' : 'Scanning in progress...'
+    },
   },
   created () {
     this.emitter.on("uploade-completed", this.watchProgress)
@@ -74,11 +77,16 @@ export default {
 
 <template>
   <div class="scanner-progress">
-    <h3 class="mb-1">{{status}}</h3>
+    <div class="inline-block mb-1"><a-spin v-if="!isScanningCompleted" class="scanner-progress__loader" /><h3 class="inline-block">{{status}}</h3></div>
     <a-progress :percent="progressPercent" :strokeColor="barColor" />
   </div>
 </template>
 
+<style scoped>
+.scanner-progress__loader {
+  margin-right: 1rem;
+}
+</style>
 <style>
 /* we can't use 'scoped' to edit components of the ui library */
 .scanner .ant-progress-text {
