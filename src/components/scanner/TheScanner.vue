@@ -2,6 +2,7 @@
 import { UploadOutlined } from '@ant-design/icons-vue'
 import { uploadFilesRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
 import handleError from '@/utils/handleError'
+import getCssVariableValue from '@/utils/getCssVariableValue'
 
 export default {
   components: {
@@ -33,7 +34,7 @@ export default {
   },
   computed: {
     barColor () {
-      return getComputedStyle(document.documentElement).getPropertyValue('--active-color')
+      return getCssVariableValue('--active-color')
     }
   },
   methods: {
@@ -78,48 +79,44 @@ export default {
 </script>
 
 <template>
-  <h1>Scanner</h1>
+  <div class="scanner">
+    <h1>Scanner</h1>
 
-  <div class="scanner--label"><label>Upload one or more dependency files</label></div>
-  <a-upload :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
+    <div class="scanner__label"><label>Upload one or more dependency files</label></div>
+    <a-upload :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Select File
+      </a-button>
+    </a-upload>
 
-    <a-button>
-      <upload-outlined></upload-outlined>
-      Select Files
-    </a-button>
-    
-  </a-upload>
+    <div class="margin-top-1">
+      <a-button
+        type="primary"
+        :disabled="fileList.length === 0"
+        :loading="uploading"
+        @click="handleUpload"
+      >
+        {{ uploading ? 'Uploading' : 'Start Upload' }}
+      </a-button>
 
-  <div style="margin-top: 1rem;">
-    <a-button
-      type="primary"
-      :disabled="fileList.length === 0"
-      :loading="uploading"
-      @click="handleUpload"
-    >
-      {{ uploading ? 'Uploading' : 'Start Upload' }}
-    </a-button>
+      <a-button class="margin-top-1" @click="concludeUpload">Conclude</a-button>
+      <a-button class="margin-top-1" @click="checkUploadStatus">Check status</a-button>
+    </div>
 
-    <a-button style="margin-left: 1rem" @click="concludeUpload">Conclude</a-button>
-    <a-button style="margin-left: 1rem" @click="checkUploadStatus">Check status</a-button>
+    <a-progress :percent="30" :strokeColor="barColor" />
   </div>
-
-  <a-progress :percent="30" :strokeColor="barColor" />
-
-  <a-result
-    status="success"
-    title="Successfully Purchased Cloud Server ECS!"
-    sub-title="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
-  >
-    <template #extra>
-      <a-button key="console" type="primary">Go Console</a-button>
-      <a-button key="buy">Buy Again</a-button>
-    </template>
-  </a-result>
 </template>
 
-<style>
-.scanner--label {
+<style scoped>
+.scanner__label {
   margin-bottom: 0.5rem;
+}
+</style>
+
+<style>
+/* we can't use 'scoped' to edit components of the ui library */
+.scanner .ant-progress-text {
+  color: var(--text-color);
 }
 </style>

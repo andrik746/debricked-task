@@ -25,7 +25,7 @@ export default {
 
 <template>
   <header>
-    <img :src="`src/assets/debricked-logo-${theme}-theme.svg`" @click="goHome" style="cursor: pointer;" />
+    <img :src="`src/assets/debricked-logo-${theme}-theme.svg`" @click="goHome" />
     
     <nav>
       <RouterLink to="/">Scanner</RouterLink>
@@ -48,6 +48,7 @@ header {
 header img {
   width: 10rem;
   height: auto;
+  cursor: pointer;
 }
 
 nav {
@@ -76,12 +77,6 @@ nav a:first-of-type {
     display: flex;
     place-items: center;
     
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
   }
 
   nav {

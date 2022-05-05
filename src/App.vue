@@ -29,6 +29,7 @@ export default {
         const response = await simulateLoginRequest()
         if (response.data?.token) localStorage.setItem('token', response.data.token)
       } catch (e) {
+        // todo: we could add a warning if the login failes
         handleError(e)
       } finally {
         this.loginLoading = false
@@ -43,11 +44,15 @@ export default {
 </script>
 
 <template>
-  <div v-if="loginLoading" style="margin-top: 2rem"><a-spin style="margin-right: 1rem" />Logging in...</div>
+  <div class="debricked-app">
+    <div v-if="loginLoading" class="debricked-app__loader-container">
+      <a-spin class="debricked-app__loader" />Logging in...
+    </div>
 
-  <div v-else>
-    <MainHeader />
-    <RouterView />
+    <div v-else>
+      <MainHeader />
+      <RouterView />
+    </div>
   </div>
 </template>
 
@@ -62,5 +67,11 @@ export default {
 @import 'ant-design-vue/lib/select/style/index.css';
 @import 'ant-design-vue/lib/spin/style/index.css';
 
+.debricked-app__loader-container {
+  margin-top: 2rem;
+}
+.debricked-app__loader {
+  margin-right: 1rem
+}
 
 </style>

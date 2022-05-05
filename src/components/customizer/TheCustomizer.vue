@@ -16,6 +16,8 @@ export default {
       document.documentElement.setAttribute(key, value)
       // global event to make reactive changes to the dom (change logo)
       this.emitter.emit(key, value)
+      // we use global event instead of global state (vuex) because our app is small
+      // and this is the only place where we need to pass data like this
     },
 
   }
@@ -24,41 +26,46 @@ export default {
 </script>
 
 <template>
-  <div class="customizer--section">
-    <div class="customizer--label"><label>Select theme</label></div>
-    <a-select
-      :value="theme"
-      style="width: 120px"
-      @change="(value) => handleChange(value, 'theme')"
-    >
-      <a-select-option value="light">Light</a-select-option>
-      <a-select-option value="dark">Dark</a-select-option>
-    </a-select>
-  </div>
+  <div class="customizer">
+    <div class="customizer__section">
+      <div class="customizer__label"><label>Select theme</label></div>
+      <a-select
+        class="customizer__select"
+        :value="theme"
+        @change="(value) => handleChange(value, 'theme')"
+      >
+        <a-select-option value="light">Light</a-select-option>
+        <a-select-option value="dark">Dark</a-select-option>
+      </a-select>
+    </div>
 
-  <a-divider />
+    <div class="customizer__section">
+      <div class="customizer__label"><label>Select font-size</label></div>
+      <a-select
+        class="customizer__select"
+        :value="font"
+        @change="(value) => handleChange(value, 'font')"
+      >
+        <a-select-option value="small">Small</a-select-option>
+        <a-select-option value="medium">Medium</a-select-option>
+        <a-select-option value="large">Large</a-select-option>
+        <a-select-option value="extra-large">Extra Large</a-select-option>
+      </a-select>
+    </div>
 
-  <div class="customizer--section">
-    <div class="customizer--label"><label>Select font-size</label></div>
-    <a-select
-      :value="font"
-      style="width: 120px"
-      @change="(value) => handleChange(value, 'font')"
-    >
-      <a-select-option value="small">Small</a-select-option>
-      <a-select-option value="medium">Medium</a-select-option>
-      <a-select-option value="large">Large</a-select-option>
-      <a-select-option value="extra-large">Extra Large</a-select-option>
-    </a-select>
   </div>
 </template>
 
 <style scoped>
-.customizer--section {
+.customizer__section {
   margin-bottom: 1rem;
 }
 
-.customizer--label {
-  margin-bottom: 0.5rem;
+.customizer__label {
+  margin-bottom: 0.25rem;
+}
+
+.customizer__select {
+  width: 120px;
 }
 </style>
