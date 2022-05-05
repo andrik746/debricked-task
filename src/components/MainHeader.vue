@@ -11,11 +11,15 @@ export default {
     }
   },
   mounted () {
-    this.emitter.on("theme", value => {
-      this.theme = value
-    })
+    this.emitter.on("theme", this.setTheme)
+  },
+  beforeUnmount () {
+    this.emitter.off("theme", this.setTheme)
   },
   methods: {
+    setTheme (value) {
+      this.theme = value
+    },
     goHome () {
       this.$router.push('/')
     }

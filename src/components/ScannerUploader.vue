@@ -1,10 +1,10 @@
 <script>
 import { UploadOutlined } from '@ant-design/icons-vue'
-import { uploadFileRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
+import { uploadFileRequest, concludeUploadRequest } from '@/services/ScannerService'
 import handleError from '@/utils/handleError'
-import getCssVariableValue from '@/utils/getCssVariableValue'
 
 export default {
+  name: 'ScannerUploader',
   components: {
     UploadOutlined
   },
@@ -13,11 +13,6 @@ export default {
       fileList: [],
       uploading: false,
       uploadId: ''
-    }
-  },
-  computed: {
-    barColor () {
-      return getCssVariableValue('--active-color')
     }
   },
   methods: {
@@ -39,6 +34,7 @@ export default {
         await this.uploadFile()
         // we send the 'conclude' request to inform the server that there will be no more files for current upload
         await this.concludeUpload()
+        this.emitter.emit('uploade-completed', this.uploadId)
       } catch (e) {
         handleError(e)
       }
@@ -62,23 +58,12 @@ export default {
       } catch (e) {
         handleError(e)
       }
-    },
-    async checkUploadStatus () {
-      try {
-        await checkUploadStatusRequest(this.uploadId)
-      } catch (e) {
-        handleError(e)
-      }
-    },
+    }
   }
 }
 </script>
-
 <template>
-  <div class="scanner">
-    <h1>Scanner</h1>
-
-    <h3 class="mb-1">Upload your dependency files</h3>
+  <div class="scanner-uploader">
     <a-upload  :file-list="fileList" :before-upload="onChange" @remove="clearFileList">
       <a-button>
         <upload-outlined></upload-outlined>
@@ -95,21 +80,6 @@ export default {
       >
         {{ uploading ? 'Uploading' : 'Start Upload' }}
       </a-button>
-
-      <a-button class="mt-1" @click="checkUploadStatus">Check status</a-button>
     </div>
-
-    <a-progress :percent="30" :strokeColor="barColor" />
   </div>
 </template>
-
-<style scoped>
-
-</style>
-
-<style>
-/* we can't use 'scoped' to edit components of the ui library */
-.scanner .ant-progress-text {
-  color: var(--text-color);
-}
-</style>
