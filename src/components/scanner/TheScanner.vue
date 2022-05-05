@@ -82,15 +82,15 @@ export default {
   <div class="scanner">
     <h1>Scanner</h1>
 
-    <div class="scanner__label"><label>Upload one or more dependency files</label></div>
-    <a-upload :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
+    <h3 class="mb-1">Upload your dependency files</h3>
+    <a-upload  :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
       <a-button>
         <upload-outlined></upload-outlined>
         Select File
       </a-button>
     </a-upload>
 
-    <div class="margin-top-1">
+    <div class="mt-1">
       <a-button
         type="primary"
         :disabled="fileList.length === 0"
@@ -100,8 +100,8 @@ export default {
         {{ uploading ? 'Uploading' : 'Start Upload' }}
       </a-button>
 
-      <a-button class="margin-top-1" @click="concludeUpload">Conclude</a-button>
-      <a-button class="margin-top-1" @click="checkUploadStatus">Check status</a-button>
+      <a-button class="mt-1" @click="concludeUpload">Conclude</a-button>
+      <a-button class="mt-1" @click="checkUploadStatus">Check status</a-button>
     </div>
 
     <a-progress :percent="30" :strokeColor="barColor" />
@@ -109,9 +109,7 @@ export default {
 </template>
 
 <style scoped>
-.scanner__label {
-  margin-bottom: 0.5rem;
-}
+
 </style>
 
 <style>

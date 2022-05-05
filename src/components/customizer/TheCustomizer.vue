@@ -26,8 +26,11 @@ export default {
 </script>
 
 <template>
+  
   <div class="customizer">
-    <div class="customizer__section">
+    <h1>Customizer</h1>
+    <h3>You can customise the look of the application here</h3>
+    <div class="customizer__section mt-1">
       <div class="customizer__label"><label>Select theme</label></div>
       <a-select
         class="customizer__select"
@@ -66,6 +69,6 @@ export default {
 }
 
 .customizer__select {
-  width: 120px;
+  width: 12rem;
 }
 </style>
