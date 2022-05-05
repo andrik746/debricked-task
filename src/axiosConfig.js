@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-const corsApiHost = 'cors-anywhere.herokuapp.com/'
-const baseURL = 'app.debricked.com/api/'
+const baseURL = 'localhost:8081/api/'
 
 const axiosConfig = axios.create({
-  baseURL: `https://${corsApiHost}${baseURL}`
+  baseURL: `http://${baseURL}`
 })
 
 // add token to each request

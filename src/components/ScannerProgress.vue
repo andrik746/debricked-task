@@ -5,7 +5,7 @@ import getCssVariableValue from '@/utils/getCssVariableValue'
 
 export default {
   name: 'ScannerProgress',
-  emits: ['newResult'],
+  emits: ['newResult', 'showUploader'],
   data () {
     return {
       progressPercent: 0,
@@ -55,6 +55,10 @@ export default {
     onStatusCheckingOver () {
       clearTimeout(this.timeout)
       this.loading = false
+      setTimeout(() => {
+        this.progressPercent = 0
+        this.$emit('showUploader')
+      }, 2000)
     },
     showResult({result, file}) {
       const resultObject = {

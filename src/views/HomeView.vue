@@ -24,11 +24,6 @@ export default {
     },
     handleNewResult (result) {
       this.results.push(result)
-
-      // show uploader again
-      setTimeout(() => {
-        this.toggleUploader()
-      }, 2000)
     }
   }
 }
@@ -38,8 +33,9 @@ export default {
   <main>
     <h1>Scanner</h1>
 
+    <!-- we use v-show to keep components alive -->
     <ScannerUploader v-show="showUploader" />
-    <ScannerProgress v-show="!showUploader" @newResult="handleNewResult" />
+    <ScannerProgress v-show="!showUploader" @newResult="handleNewResult" @showUploader="toggleUploader" />
 
     <ScannerResult :results="results" />
   </main>
