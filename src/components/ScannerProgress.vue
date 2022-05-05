@@ -63,7 +63,7 @@ export default {
       setTimeout(() => {
         this.progressPercent = 0;
         this.$emit("showUploader");
-      }, 2000);
+      }, 1500);
     },
     showResult({ result, file }) {
       const resultObject = {
@@ -94,7 +94,7 @@ export default {
 </style>
 <style>
 /* we can't use 'scoped' to edit components of the ui library */
-.scanner .ant-progress-text {
+.scanner-progress .ant-progress-text {
   color: var(--text-color);
 }
 </style>

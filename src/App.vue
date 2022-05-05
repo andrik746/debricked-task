@@ -4,6 +4,7 @@ import { RouterView } from "vue-router";
 
 <script>
 import MainHeader from "@/components/MainHeader.vue";
+import MainFooter from "@/components/MainFooter.vue";
 import { simulateLoginRequest } from "@/services/LoginService";
 import handleError from "@/utils/handleError";
 
@@ -51,14 +52,17 @@ export default {
 
 <template>
   <div class="debricked-app">
-    <div v-if="loginLoading" class="debricked-app__loader-container">
-      <a-spin class="debricked-app__loader" />Logging in...
-    </div>
+    <template v-if="loginLoading">
+      <div class="debricked-app__loader-container">
+        <a-spin class="debricked-app__loader" />Logging in...
+      </div>
+    </template>
 
-    <div v-else>
+    <template v-else>
       <MainHeader />
       <RouterView />
-    </div>
+      <MainFooter style="margin-top: auto;" />
+    </template>
   </div>
 </template>
 

@@ -52,6 +52,8 @@ export default {
         <a-select-option value="extra-large">Extra Large</a-select-option>
       </a-select>
     </div>
+
+    <!-- todo: we could customize font-family, layout, table columns, etc... -->
   </div>
 </template>
 

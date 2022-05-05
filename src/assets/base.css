@@ -2,19 +2,23 @@
   /* theme setup */
   --active-color: hsla(160, 100%, 37%, 1);
   --link-hover-background-color: hsla(160, 100%, 37%, 0.2);
-  --border-color: #091A28;
+  --border-color: #080f27;
   --background-color: #FFFFFF;
-  --text-color: #091A28;
+  --text-color: #080f27;
+  --background-darker: #fafafa;
+  --background-lighter: #fff;
   /* font setup */
   --font-size: 16px
 }
 
 [theme="dark"] {
-  --active-color: #FF4365;
-  --link-hover-background-color: hsla(340, 100%, 37%, 0.2);
+  --active-color: #fd9acd;
+  --link-hover-background-color: hsla(340, 100%, 79%, 0.145);
   --border-color: #FFFFFF;
-  --background-color: #091A28;
+  --background-color: #080f27;
   --text-color: #FFFFFF;
+  --background-darker: #252f53;
+  --background-lighter: #ecf6fc;
 }
 
 [font="small"] {
@@ -41,7 +45,7 @@
 }
 
 body {
-  min-height: 100vh;
+  
   color: var(--text-color);
   background: var(--background-color);
   transition: color 0.5s, background-color 0.5s;
@@ -62,6 +66,16 @@ body {
   font-weight: normal;
 }
 
+.debricked-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  padding-bottom: 10rem;
+}
+
 a {
   text-decoration: none;
   transition: 0.4s;
@@ -72,13 +86,13 @@ a:hover {
   background-color: var(--link-hover-background-color);
 }
 
-/* .flex {
+.flex {
   display: flex;
 }
 
 .align-items-center {
   align-items: center;
-} */
+}
 
 .inline-block {
   display: inline-block;
@@ -94,10 +108,4 @@ a:hover {
 
 .mr-1 {
   margin-right: 1rem;
-}
-
-@media (min-width: 1024px) {
-  #app {
-    
-  }
 }
