@@ -1,32 +1,29 @@
 <script>
 export default {
-  name: 'TheCustomizer',
-  data () {
+  name: "TheCustomizer",
+  data() {
     return {
-      theme: localStorage.getItem('theme') || 'light',
-      font: localStorage.getItem('font') || 'medium'
-    }
+      theme: localStorage.getItem("theme") || "light",
+      font: localStorage.getItem("font") || "medium",
+    };
   },
   methods: {
-    handleChange (value, key) {
-      this[key] = value
+    handleChange(value, key) {
+      this[key] = value;
       // local storage is to keep the theme after page reloads
-      localStorage.setItem(key, value)
+      localStorage.setItem(key, value);
       // attribute change is for immediate css change
-      document.documentElement.setAttribute(key, value)
+      document.documentElement.setAttribute(key, value);
       // global event to make reactive changes to the dom (change logo)
-      this.emitter.emit(key, value)
+      this.emitter.emit(key, value);
       // we use global event instead of global state (vuex) because our app is small
       // and this is the only place where we need to pass data like this
     },
-
-  }
-}
-
+  },
+};
 </script>
 
 <template>
-  
   <div class="customizer">
     <h1>Customizer</h1>
     <h3>You can customise the look of the application here</h3>
@@ -55,7 +52,6 @@ export default {
         <a-select-option value="extra-large">Extra Large</a-select-option>
       </a-select>
     </div>
-
   </div>
 </template>
 

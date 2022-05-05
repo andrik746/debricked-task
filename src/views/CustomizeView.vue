@@ -1,5 +1,5 @@
 <script setup>
-import TheCustomizer from '@/components/TheCustomizer.vue'
+import TheCustomizer from "@/components/TheCustomizer.vue";
 </script>
 
 <template>

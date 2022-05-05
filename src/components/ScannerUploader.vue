@@ -1,58 +1,61 @@
 <script>
-import { UploadOutlined } from '@ant-design/icons-vue'
-import { uploadFileRequest, concludeUploadRequest } from '@/services/ScannerService'
-import handleError from '@/utils/handleError'
+import { UploadOutlined } from "@ant-design/icons-vue";
+import {
+  uploadFileRequest,
+  concludeUploadRequest,
+} from "@/services/ScannerService";
+import handleError from "@/utils/handleError";
 
 export default {
-  name: 'ScannerUploader',
+  name: "ScannerUploader",
   components: {
-    UploadOutlined
+    UploadOutlined,
   },
-  data () {
+  data() {
     return {
-      uploading: false
-    }
+      uploading: false,
+    };
   },
+
   methods: {
-    addCustomUpload (file) {
+    addCustomUpload(file) {
       // this method will be triggered every time we select a new file
       // we will support only 1 file per upload for MVP
-      
+
       // custom request to upload a file
-      this.handleUpload(file)
+      this.handleUpload(file);
 
       // we need to retrun false to stop the default behavior of the ui component
       // we have sent our custom request instead
-      return false
+      return false;
     },
-    async handleUpload (file) {
+    async handleUpload(file) {
       try {
-        this.uploading = true
+        this.uploading = true;
 
-        const response = await uploadFileRequest(file)
-        const uploadId = response.data?.ciUploadId
-        if (!uploadId) throw new Error('uploadId is missing')
+        const response = await uploadFileRequest(file);
+        const uploadId = response.data?.ciUploadId;
+        if (!uploadId) throw new Error("uploadId is missing");
 
         // we send the 'conclude' request to inform the server that there will be no more files for current upload
-        await concludeUploadRequest(uploadId)
+        await concludeUploadRequest(uploadId);
 
         // let other components know that the upload is finished
-        this.emitter.emit('uploade-completed', { uploadId, file })
+        this.emitter.emit("uploade-completed", { uploadId, file });
       } catch (e) {
-        handleError(e)
+        handleError(e);
       } finally {
-        this.uploading = false
+        this.uploading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <template>
   <div class="scanner-uploader">
     <h3 class="mb-1">Upload your dependency file</h3>
-    
-    
-    <a-upload  :showUploadList="false" :before-upload="addCustomUpload"  >
+
+    <a-upload :showUploadList="false" :before-upload="addCustomUpload">
       <a-button :disabled="uploading" :loading="uploading">
         <upload-outlined></upload-outlined>
         Select File

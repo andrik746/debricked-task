@@ -1,36 +1,38 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-
+import { RouterLink } from "vue-router";
 </script>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      theme: localStorage.getItem('theme') || 'light'
-    }
+      theme: localStorage.getItem("theme") || "light",
+    };
   },
-  mounted () {
-    this.emitter.on("theme", this.setTheme)
+  mounted() {
+    this.emitter.on("theme", this.setTheme);
   },
-  beforeUnmount () {
-    this.emitter.off("theme", this.setTheme)
+  beforeUnmount() {
+    this.emitter.off("theme", this.setTheme);
   },
   methods: {
-    setTheme (value) {
-      this.theme = value
+    setTheme(value) {
+      this.theme = value;
     },
-    goHome () {
-      this.$router.push('/')
-    }
-  }
-}
+    goHome() {
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <template>
   <header>
-    <img :src="`src/assets/debricked-logo-${theme}-theme.svg`" @click="goHome" />
-    
+    <img
+      :src="`src/assets/debricked-logo-${theme}-theme.svg`"
+      @click="goHome"
+    />
+
     <nav>
       <RouterLink to="/">Scanner</RouterLink>
       <RouterLink to="/customizer">Customizer</RouterLink>
@@ -39,7 +41,6 @@ export default {
 </template>
 
 <style scoped>
-
 header {
   display: flex;
   align-items: center;
@@ -80,7 +81,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    
   }
 
   nav {
@@ -88,5 +88,4 @@ nav a:first-of-type {
     font-size: 1rem;
   }
 }
-
 </style>

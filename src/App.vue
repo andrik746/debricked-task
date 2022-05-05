@@ -1,46 +1,52 @@
 <script setup>
-import { RouterView } from 'vue-router'
-
+import { RouterView } from "vue-router";
 </script>
 
 <script>
-import MainHeader from '@/components/MainHeader.vue'
-import { simulateLoginRequest } from '@/services/LoginService'
-import handleError from '@/utils/handleError'
+import MainHeader from "@/components/MainHeader.vue";
+import { simulateLoginRequest } from "@/services/LoginService";
+import handleError from "@/utils/handleError";
 
 export default {
-  data () {
+  data() {
     return {
-      loginLoading: false
-    }
+      loginLoading: false,
+    };
   },
-  mounted () {
-    this.simulateLogin()
-    this.initUserStyles()
+  mounted() {
+    this.simulateLogin();
+    this.initUserStyles();
   },
   methods: {
     async simulateLogin() {
       try {
         // reset previous token
-        localStorage.setItem('token', '')
-        
-        this.loginLoading = true
+        localStorage.setItem("token", "");
 
-        const response = await simulateLoginRequest()
-        if (response.data?.token) localStorage.setItem('token', response.data.token)
+        this.loginLoading = true;
+
+        const response = await simulateLoginRequest();
+        if (response.data?.token)
+          localStorage.setItem("token", response.data.token);
       } catch (e) {
         // todo: we could add a warning if the login failes
-        handleError(e)
+        handleError(e);
       } finally {
-        this.loginLoading = false
+        this.loginLoading = false;
       }
     },
-    initUserStyles () {
-      document.documentElement.setAttribute('theme', localStorage.getItem('theme') || 'light')
-      document.documentElement.setAttribute('font', localStorage.getItem('font') || 'medium')
-    }
-  }
-}
+    initUserStyles() {
+      document.documentElement.setAttribute(
+        "theme",
+        localStorage.getItem("theme") || "light"
+      );
+      document.documentElement.setAttribute(
+        "font",
+        localStorage.getItem("font") || "medium"
+      );
+    },
+  },
+};
 </script>
 
 <template>
@@ -57,17 +63,16 @@ export default {
 </template>
 
 <style>
-@import '@/assets/base.css';
+@import "@/assets/base.css";
 
 /* styles for components from the ant-design library */
-@import 'ant-design-vue/lib/progress/style/index.css';
-@import 'ant-design-vue/lib/button/style/index.css';
-@import 'ant-design-vue/lib/upload/style/index.css';
-@import 'ant-design-vue/lib/result/style/index.css';
-@import 'ant-design-vue/lib/select/style/index.css';
-@import 'ant-design-vue/lib/spin/style/index.css';
-@import 'ant-design-vue/lib/table/style/index.css';
-
+@import "ant-design-vue/lib/progress/style/index.css";
+@import "ant-design-vue/lib/button/style/index.css";
+@import "ant-design-vue/lib/upload/style/index.css";
+@import "ant-design-vue/lib/result/style/index.css";
+@import "ant-design-vue/lib/select/style/index.css";
+@import "ant-design-vue/lib/spin/style/index.css";
+@import "ant-design-vue/lib/table/style/index.css";
 </style>
 
 <style scoped>
@@ -75,6 +80,6 @@ export default {
   margin-top: 2rem;
 }
 .debricked-app__loader {
-  margin-right: 1rem
+  margin-right: 1rem;
 }
 </style>

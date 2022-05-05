@@ -1,32 +1,32 @@
 <script setup>
-import ScannerUploader from '@/components/ScannerUploader.vue'
-import ScannerProgress from '@/components/ScannerProgress.vue'
-import ScannerResult from '@/components/ScannerResult.vue'
+import ScannerUploader from "@/components/ScannerUploader.vue";
+import ScannerProgress from "@/components/ScannerProgress.vue";
+import ScannerResult from "@/components/ScannerResult.vue";
 </script>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       showUploader: true,
-      results: []
-    }
+      results: [],
+    };
   },
-  mounted () {
-    this.emitter.on("uploade-completed", this.toggleUploader)
+  mounted() {
+    this.emitter.on("uploade-completed", this.toggleUploader);
   },
-  beforeUnmount () {
-    this.emitter.off("uploade-completed", this.toggleUploader)
+  beforeUnmount() {
+    this.emitter.off("uploade-completed", this.toggleUploader);
   },
   methods: {
-    toggleUploader () {
-      this.showUploader = !this.showUploader
+    toggleUploader() {
+      this.showUploader = !this.showUploader;
     },
-    handleNewResult (result) {
-      this.results.push(result)
-    }
-  }
-}
+    handleNewResult(result) {
+      this.results.push(result);
+    },
+  },
+};
 </script>
 
 <template>
@@ -35,7 +35,11 @@ export default {
 
     <!-- we use v-show to keep components alive -->
     <ScannerUploader v-show="showUploader" />
-    <ScannerProgress v-show="!showUploader" @newResult="handleNewResult" @showUploader="toggleUploader" />
+    <ScannerProgress
+      v-show="!showUploader"
+      @newResult="handleNewResult"
+      @showUploader="toggleUploader"
+    />
 
     <ScannerResult :results="results" />
   </main>

@@ -1,83 +1,88 @@
 <script>
-import { checkUploadStatusRequest } from '@/services/ScannerService'
-import handleError from '@/utils/handleError'
-import getCssVariableValue from '@/utils/getCssVariableValue'
+import { checkUploadStatusRequest } from "@/services/ScannerService";
+import handleError from "@/utils/handleError";
+import getCssVariableValue from "@/utils/getCssVariableValue";
 
 export default {
-  name: 'ScannerProgress',
-  emits: ['newResult', 'showUploader'],
-  data () {
+  name: "ScannerProgress",
+  emits: ["newResult", "showUploader"],
+  data() {
     return {
       progressPercent: 0,
       loading: false,
-    }
+    };
   },
   computed: {
-    barColor () {
-      return getCssVariableValue('--active-color')
+    barColor() {
+      return getCssVariableValue("--active-color");
     },
-    isScanningCompleted () {
-      return this.progressPercent === 100
+    isScanningCompleted() {
+      return this.progressPercent === 100;
     },
-    status () {
-      return this.isScanningCompleted ? 'Scanning completed' : 'Scanning in progress...'
+    status() {
+      return this.isScanningCompleted
+        ? "Scanning completed"
+        : "Scanning in progress...";
     },
   },
-  created () {
-    this.emitter.on("uploade-completed", this.watchProgress)
+  created() {
+    this.emitter.on("uploade-completed", this.watchProgress);
   },
-  beforeUnmount () {
-    this.emitter.off("uploade-completed", this.watchProgress)
+  beforeUnmount() {
+    this.emitter.off("uploade-completed", this.watchProgress);
   },
   methods: {
-    watchProgress ({uploadId, file}) {
-      this.checkUploadStatus({uploadId, file})
+    watchProgress({ uploadId, file }) {
+      this.checkUploadStatus({ uploadId, file });
     },
-    async checkUploadStatus ({uploadId, file}) {
+    async checkUploadStatus({ uploadId, file }) {
       try {
-        this.loading = true
-        const response = await checkUploadStatusRequest(uploadId)
-        this.progressPercent = response.data?.progress || 0
-        
+        this.loading = true;
+        const response = await checkUploadStatusRequest(uploadId);
+        this.progressPercent = response.data?.progress || 0;
+
         if (this.progressPercent === 100) {
           // if scanning is done
-          this.onStatusCheckingOver()
+          this.onStatusCheckingOver();
 
-          this.showResult({ result: response.data, file})
+          this.showResult({ result: response.data, file });
         } else {
           // check again later
-          this.timeout = setTimeout (() => {
-            this.checkUploadStatus({uploadId, file})
-          }, 1000)
+          this.timeout = setTimeout(() => {
+            this.checkUploadStatus({ uploadId, file });
+          }, 1000);
         }
       } catch (e) {
-        this.onStatusCheckingOver()
-        handleError(e)
+        this.onStatusCheckingOver();
+        handleError(e);
       }
     },
-    onStatusCheckingOver () {
-      clearTimeout(this.timeout)
-      this.loading = false
+    onStatusCheckingOver() {
+      clearTimeout(this.timeout);
+      this.loading = false;
       setTimeout(() => {
-        this.progressPercent = 0
-        this.$emit('showUploader')
-      }, 2000)
+        this.progressPercent = 0;
+        this.$emit("showUploader");
+      }, 2000);
     },
-    showResult({result, file}) {
+    showResult({ result, file }) {
       const resultObject = {
         name: file.name,
         vulnerabilities: result.vulnerabilitiesFound,
-        date: new Date().toDateString()
-      }
-      this.$emit('newResult', resultObject)
-    }
-  }
-}
+        date: new Date().toDateString(),
+      };
+      this.$emit("newResult", resultObject);
+    },
+  },
+};
 </script>
 
 <template>
   <div class="scanner-progress">
-    <div class="inline-block mb-1"><a-spin v-if="!isScanningCompleted" class="scanner-progress__loader" /><h3 class="inline-block">{{status}}</h3></div>
+    <div class="inline-block mb-1">
+      <a-spin v-if="!isScanningCompleted" class="scanner-progress__loader" />
+      <h3 class="inline-block">{{ status }}</h3>
+    </div>
     <a-progress :percent="progressPercent" :strokeColor="barColor" />
   </div>
 </template>

@@ -1,40 +1,49 @@
 <script>
 export default {
-  name: 'ScannerResult',
+  name: "ScannerResult",
   props: {
     results: {
       type: Array,
-      default: [],
-      required: true
-    }
+      default: () => [],
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       columns: [
         {
-          title: 'Name',
-          dataIndex: 'name',
-          key: 'name',
+          title: "Name",
+          dataIndex: "name",
+          key: "name",
         },
         {
-          title: 'Date of Processing',
-          dataIndex: 'date',
-          key: 'date',
+          title: "Date of Processing",
+          dataIndex: "date",
+          key: "date",
         },
         {
-          title: 'Vulnerabilities',
-          dataIndex: 'vulnerabilities',
-          key: 'vulnerabilities',
+          title: "Vulnerabilities",
+          dataIndex: "vulnerabilities",
+          key: "vulnerabilities",
         },
       ],
-    }
-  }
-}
+    };
+  },
+  computed: {
+    dataSource() {
+      return Array.from(this.results).reverse();
+    },
+  },
+};
 </script>
 
 <template>
   <div class="scanner-results mt-1">
-    <a-table v-if="results.length" :dataSource="results.reverse()" :columns="columns" :pagination="false" />
+    <a-table
+      v-if="results.length"
+      :dataSource="dataSource"
+      :columns="columns"
+      :pagination="false"
+    />
   </div>
-
 </template>
