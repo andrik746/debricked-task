@@ -73,6 +73,7 @@ export default {
 @import "ant-design-vue/lib/select/style/index.css";
 @import "ant-design-vue/lib/spin/style/index.css";
 @import "ant-design-vue/lib/table/style/index.css";
+@import "ant-design-vue/lib/message/style/index.css";
 </style>
 
 <style scoped>
