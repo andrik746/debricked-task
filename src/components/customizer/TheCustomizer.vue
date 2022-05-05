@@ -1,8 +1,3 @@
-<script setup>
-//import ChildComponent from './ChildComponent.vue'
-
-</script>
-
 <script>
 export default {
   name: 'TheCustomizer',
@@ -19,6 +14,8 @@ export default {
       localStorage.setItem(key, value)
       // attribute change is for immediate css change
       document.documentElement.setAttribute(key, value)
+      // global event to make reactive changes to the dom (change logo)
+      this.emitter.emit(key, value)
     },
 
   }

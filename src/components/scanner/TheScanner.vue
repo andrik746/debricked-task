@@ -1,6 +1,6 @@
 <script>
 import { UploadOutlined } from '@ant-design/icons-vue'
-import { uploadFileRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
+import { uploadFilesRequest, checkUploadStatusRequest, concludeUploadRequest } from '@/services/ScannerService'
 import handleError from '@/utils/handleError'
 
 export default {
@@ -46,7 +46,7 @@ export default {
     async handleUpload () {
       try {
         this.uploading = true
-        const response = await uploadFileRequest(this.fileList)
+        const response = await uploadFilesRequest(this.fileList)
         this.uploadId = response.data.ciUploadId
       } catch (e) {
         handleError(e)

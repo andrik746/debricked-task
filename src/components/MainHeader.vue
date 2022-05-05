@@ -5,10 +5,15 @@ import { RouterLink } from 'vue-router'
 
 <script>
 export default {
-  computed: {
-    theme () {
-      return 'light'
+  data () {
+    return {
+      theme: localStorage.getItem('theme') || 'light'
     }
+  },
+  mounted () {
+    this.emitter.on("theme", value => {
+      this.theme = value
+    })
   }
 }
 </script>
