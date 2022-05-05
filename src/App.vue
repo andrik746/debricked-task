@@ -61,7 +61,7 @@ export default {
     <template v-else>
       <MainHeader />
       <RouterView />
-      <MainFooter style="margin-top: auto;" />
+      <MainFooter style="margin-top: auto" />
     </template>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
 <style>
 @import "@/assets/base.css";
 
-/* styles for components from the ant-design library */
+/* styles for ui components from the ant-design library */
 @import "ant-design-vue/lib/progress/style/index.css";
 @import "ant-design-vue/lib/button/style/index.css";
 @import "ant-design-vue/lib/upload/style/index.css";

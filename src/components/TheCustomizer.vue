@@ -16,8 +16,6 @@ export default {
       document.documentElement.setAttribute(key, value);
       // global event to make reactive changes to the dom (change logo)
       this.emitter.emit(key, value);
-      // we use global event instead of global state (vuex) because our app is small
-      // and this is the only place where we need to pass data like this
     },
   },
 };

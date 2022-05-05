@@ -51,7 +51,6 @@ export default {
 <style>
 .scanner-results .ant-table {
   background: var(--background-lighter);
-  
 }
 .scanner-results .ant-table-thead > tr > th {
   background: var(--background-darker);
