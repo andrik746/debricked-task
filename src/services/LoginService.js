@@ -1,5 +1,4 @@
 import axios from '@/axiosConfig'
-import handleError from '@/utils/handleError'
 
 export const simulateLoginRequest = async () => {
   // setup credentials or warn user to provide them
@@ -10,14 +9,8 @@ export const simulateLoginRequest = async () => {
     return
   }
 
-  try {
-    const response = await axios.post('login_check', {
-      _username: hardcodedUsername,
-      _password: hardcodedPassword
-    })
-    
-    return response
-  } catch(e) {
-    handleError(e)
-  }
+  return axios.post('login_check', {
+    _username: hardcodedUsername,
+    _password: hardcodedPassword
+  })
 }

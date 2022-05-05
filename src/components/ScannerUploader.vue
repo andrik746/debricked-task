@@ -8,58 +8,30 @@ export default {
   components: {
     UploadOutlined
   },
-  data () {
-    return {
-      fileList: [],
-      uploading: false,
-      uploadId: ''
-    }
-  },
+  
   methods: {
-    onChange (file) {
-      // this method will be triggered every time we add a new file
-      // we will support only 1 file for MVP
-      this.fileList = [file]
+    addCustomUpload (file) {
+      // this method will be triggered every time we select a new file
+      // we will support only 1 file per upload for MVP
+      
+      // custom request to upload a file
+      this.handleUpload(file)
 
       // we need to retrun false to stop the default behavior of the ui component
-      // we will send our custom request instead
+      // we have sent our custom request instead
       return false
     },
-    clearFileList () {
-      // since we support only 1 file
-      this.fileList = []
-    },
-    async handleUpload () {
+    async handleUpload (file) {
       try {
-        this.uploading = true
-        const uploadId = await this.uploadFile()
-        if (!uploadId) return
+        const response = await uploadFileRequest(file)
+        const uploadId = response.data?.ciUploadId
+        if (!uploadId) throw new Error('uploadId is missing')
 
         // we send the 'conclude' request to inform the server that there will be no more files for current upload
-        await this.concludeUpload(uploadId)
-
-        // let other component know that the upload is finished
-        this.emitter.emit('uploade-completed', { uploadId, file: this.fileList[0] })
-        
-        this.clearFileList()
-      } catch (e) {
-        handleError(e)
-      } finally {
-        this.uploading = false
-      }
-    },
-    async uploadFile () {
-      try {
-        const response = await uploadFileRequest(this.fileList[0])
-        
-        return response.data?.ciUploadId
-      } catch (e) {
-        handleError(e)
-      } 
-    },
-    async concludeUpload (uploadId) {
-      try {
         await concludeUploadRequest(uploadId)
+
+        // let other components know that the upload is finished
+        this.emitter.emit('uploade-completed', { uploadId, file })
       } catch (e) {
         handleError(e)
       }
@@ -71,22 +43,12 @@ export default {
   <div class="scanner-uploader">
     <h3 class="mb-1">Upload your dependency file</h3>
     
-    <a-upload  :file-list="fileList" :before-upload="onChange" @remove="clearFileList">
+    
+    <a-upload  :showUploadList="false" :before-upload="addCustomUpload"  >
       <a-button>
         <upload-outlined></upload-outlined>
         Select File
       </a-button>
     </a-upload>
-
-    <div class="mt-1">
-      <a-button
-        type="primary"
-        :disabled="fileList.length === 0"
-        :loading="uploading"
-        @click="handleUpload"
-      >
-        {{ uploading ? 'Uploading' : 'Start Upload' }}
-      </a-button>
-    </div>
   </div>
 </template>
