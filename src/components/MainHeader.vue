@@ -58,6 +58,7 @@ header img {
 
 nav {
   padding-left: 1rem;
+  font-size: 1rem;
 }
 nav a.router-link-exact-active {
   color: var(--active-color);
@@ -85,7 +86,6 @@ nav a:first-of-type {
 
   nav {
     text-align: left;
-    font-size: 1rem;
   }
 }
 </style>
