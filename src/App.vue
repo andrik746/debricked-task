@@ -5,7 +5,7 @@ import { RouterView } from 'vue-router'
 
 <script>
 import MainHeader from '@/components/MainHeader.vue'
-import {simulateLoginRequest} from '@/services/LoginService'
+import { simulateLoginRequest } from '@/services/LoginService'
 import handleError from '@/utils/handleError'
 
 export default {
@@ -23,6 +23,7 @@ export default {
       try {
         // reset previous token
         localStorage.setItem('token', '')
+        
         this.loginLoading = true
 
         const response = await simulateLoginRequest()
@@ -42,7 +43,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="loginLoading">Logging in...</div>
+  <div v-if="loginLoading" style="margin-top: 2rem"><a-spin style="margin-right: 1rem" />Logging in...</div>
 
   <div v-else>
     <MainHeader />
@@ -59,6 +60,7 @@ export default {
 @import 'ant-design-vue/lib/upload/style/index.css';
 @import 'ant-design-vue/lib/result/style/index.css';
 @import 'ant-design-vue/lib/select/style/index.css';
+@import 'ant-design-vue/lib/spin/style/index.css';
 
 
 </style>

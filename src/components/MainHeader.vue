@@ -14,16 +14,21 @@ export default {
     this.emitter.on("theme", value => {
       this.theme = value
     })
+  },
+  methods: {
+    goHome () {
+      this.$router.push('/')
+    }
   }
 }
 </script>
 
 <template>
   <header>
-    <img :src="`src/assets/debricked-logo-${theme}-theme.svg`" />
+    <img :src="`src/assets/debricked-logo-${theme}-theme.svg`" @click="goHome" style="cursor: pointer;" />
     
     <nav>
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/">Scanner</RouterLink>
       <RouterLink to="/customizer">Customizer</RouterLink>
     </nav>
   </header>

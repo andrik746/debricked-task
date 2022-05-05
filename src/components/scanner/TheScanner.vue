@@ -31,6 +31,11 @@ export default {
       uploadId: ''
     }
   },
+  computed: {
+    barColor () {
+      return getComputedStyle(document.documentElement).getPropertyValue('--active-color')
+    }
+  },
   methods: {
     beforeUpload (file) {
       // we need this method to stop the ui component from sending request ???
@@ -99,7 +104,7 @@ export default {
     <a-button style="margin-left: 1rem" @click="checkUploadStatus">Check status</a-button>
   </div>
 
-  <a-progress :percent="30" />
+  <a-progress :percent="30" :strokeColor="barColor" />
 
   <a-result
     status="success"
