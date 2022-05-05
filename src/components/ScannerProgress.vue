@@ -5,6 +5,7 @@ import getCssVariableValue from '@/utils/getCssVariableValue'
 
 export default {
   name: 'ScannerProgress',
+  emits: ['newResult'],
   data () {
     return {
       progressPercent: 0,
@@ -56,8 +57,12 @@ export default {
       this.loading = false
     },
     showResult({result, file}) {
-      console.log(file.name)
-      console.log(result.vulnerabilitiesFound)
+      const resultObject = {
+        name: file.name,
+        vulnerabilities: result.vulnerabilitiesFound,
+        date: new Date().toDateString()
+      }
+      this.$emit('newResult', resultObject)
     }
   }
 }

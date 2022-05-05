@@ -66,12 +66,15 @@ export default {
 @import 'ant-design-vue/lib/result/style/index.css';
 @import 'ant-design-vue/lib/select/style/index.css';
 @import 'ant-design-vue/lib/spin/style/index.css';
+@import 'ant-design-vue/lib/table/style/index.css';
 
+</style>
+
+<style scoped>
 .debricked-app__loader-container {
   margin-top: 2rem;
 }
 .debricked-app__loader {
   margin-right: 1rem
 }
-
 </style>

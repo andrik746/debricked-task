@@ -32,13 +32,14 @@ export default {
     async handleUpload () {
       try {
         this.uploading = true
-        await this.uploadFile()
+        const uploadId = await this.uploadFile()
+        if (!uploadId) return
 
         // we send the 'conclude' request to inform the server that there will be no more files for current upload
-        await this.concludeUpload()
+        await this.concludeUpload(uploadId)
 
         // let other component know that the upload is finished
-        this.emitter.emit('uploade-completed', { uploadId: this.uploadId, file: this.fileList[0] })
+        this.emitter.emit('uploade-completed', { uploadId, file: this.fileList[0] })
         
         this.clearFileList()
       } catch (e) {
@@ -50,15 +51,15 @@ export default {
     async uploadFile () {
       try {
         const response = await uploadFileRequest(this.fileList[0])
-        this.uploadId = response.data.ciUploadId
+        
+        return response.data?.ciUploadId
       } catch (e) {
         handleError(e)
       } 
     },
-    async concludeUpload () {
+    async concludeUpload (uploadId) {
       try {
-        if (!this.uploadId) throw new Error('Upload ID is missing!')
-        await concludeUploadRequest(this.uploadId)
+        await concludeUploadRequest(uploadId)
       } catch (e) {
         handleError(e)
       }
