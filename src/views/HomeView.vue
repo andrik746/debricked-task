@@ -9,12 +9,12 @@ export default {
   props: {
     results: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      showUploader: true
+      showUploader: true,
     };
   },
   mounted() {
@@ -26,7 +26,7 @@ export default {
   methods: {
     toggleUploader() {
       this.showUploader = !this.showUploader;
-    }
+    },
   },
 };
 </script>
@@ -37,10 +37,7 @@ export default {
 
     <!-- we use v-show to keep components alive -->
     <ScannerUploader v-show="showUploader" />
-    <ScannerProgress
-      v-show="!showUploader"
-      @show-uploader="toggleUploader"
-    />
+    <ScannerProgress v-show="!showUploader" @show-uploader="toggleUploader" />
 
     <ScannerResult :results="results" />
   </main>

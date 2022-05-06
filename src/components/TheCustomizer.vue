@@ -1,7 +1,7 @@
 <script>
 export default {
   name: "TheCustomizer",
-  emits: ['theme', 'font'],
+  emits: ["theme", "font"],
   data() {
     return {
       theme: localStorage.getItem("theme") || "light",

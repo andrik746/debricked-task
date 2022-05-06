@@ -5,7 +5,7 @@ import getCssVariableValue from "@/utils/getCssVariableValue";
 
 export default {
   name: "ScannerProgress",
-  emits: ["showUploader", 'newResult'],
+  emits: ["showUploader", "newResult"],
   data() {
     return {
       progressPercent: 0,
