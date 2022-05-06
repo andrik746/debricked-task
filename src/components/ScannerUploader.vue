@@ -8,7 +8,6 @@ import handleError from "@/utils/handleError";
 
 export default {
   name: "ScannerUploader",
-  emits: ["uploade-completed"],
   components: {
     UploadOutlined,
   },
