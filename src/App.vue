@@ -12,13 +12,21 @@ export default {
   data() {
     return {
       loginLoading: false,
+      results: [], // results on top level to keep them alive when traveling between pages
     };
   },
   mounted() {
     this.simulateLogin();
     this.initUserStyles();
+    this.emitter.on("new-result", this.handleNewResult);
+  },
+  beforeUnmount() {
+    this.emitter.off("new-result", this.handleNewResult);
   },
   methods: {
+    handleNewResult(result) {
+      this.results.push(result);
+    },
     async simulateLogin() {
       try {
         // reset previous token
@@ -60,7 +68,7 @@ export default {
 
     <template v-else>
       <MainHeader />
-      <RouterView />
+      <RouterView :results="results" />
       <MainFooter style="margin-top: auto" />
     </template>
   </div>

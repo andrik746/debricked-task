@@ -5,7 +5,7 @@ import getCssVariableValue from "@/utils/getCssVariableValue";
 
 export default {
   name: "ScannerProgress",
-  emits: ["newResult", "showUploader"],
+  emits: ["showUploader", 'newResult'],
   data() {
     return {
       progressPercent: 0,
@@ -62,16 +62,16 @@ export default {
       this.loading = false;
       setTimeout(() => {
         this.progressPercent = 0;
-        this.$emit("showUploader");
+        this.$emit("show-uploader");
       }, 1500);
     },
     showResult({ result, file }) {
       const resultObject = {
         name: file.name,
-        vulnerabilities: result.vulnerabilitiesFound,
+        vulnerabilities: result.vulnerabilitiesFound, // todo: why does it show a total of all vulnerabilities among all files?
         date: new Date().toDateString(),
       };
-      this.$emit("newResult", resultObject);
+      this.emitter.emit("new-result", resultObject);
     },
   },
 };
@@ -79,7 +79,7 @@ export default {
 
 <template>
   <div class="scanner-progress">
-    <div class="inline-block mb-1">
+    <div class="inline-block mb-1/2">
       <a-spin v-if="!isScanningCompleted" class="scanner-progress__loader" />
       <h3 class="inline-block">{{ status }}</h3>
     </div>

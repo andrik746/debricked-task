@@ -6,10 +6,15 @@ import ScannerResult from "@/components/ScannerResult.vue";
 
 <script>
 export default {
+  props: {
+    results: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      showUploader: true,
-      results: [],
+      showUploader: true
     };
   },
   mounted() {
@@ -21,10 +26,7 @@ export default {
   methods: {
     toggleUploader() {
       this.showUploader = !this.showUploader;
-    },
-    handleNewResult(result) {
-      this.results.push(result);
-    },
+    }
   },
 };
 </script>
@@ -37,8 +39,7 @@ export default {
     <ScannerUploader v-show="showUploader" />
     <ScannerProgress
       v-show="!showUploader"
-      @newResult="handleNewResult"
-      @showUploader="toggleUploader"
+      @show-uploader="toggleUploader"
     />
 
     <ScannerResult :results="results" />
