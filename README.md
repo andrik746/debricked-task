@@ -5,10 +5,10 @@
 ```sh
 npm install
 ```
-### add proxy
+### Add proxy
 
 We need to upload and run a local cors-proxy server.
-follow instructions under
+Follow instructions under
 https://github.com/debricked/cors-proxy
 ### Compile and Hot-Reload for Development
 
