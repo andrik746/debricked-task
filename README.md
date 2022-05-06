@@ -18,5 +18,5 @@ npm run dev
 
 #### Add mock username and password to localStorage
 For example for Google Chrome go to:
-Developer tools/Application/Local storage/http://localhost:8080/
+Developer tools/Application/Local storage/localhost:8080/
 Then add your username and password for debricked.com
