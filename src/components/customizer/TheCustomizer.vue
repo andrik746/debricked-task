@@ -24,7 +24,7 @@ export default {
 <template>
   <div class="customizer">
     <h1>Customizer</h1>
-    <h3>You can customise the look of the application here</h3>
+    <h3>You can customise a look of the application here</h3>
     <div class="customizer__section mt-1">
       <div class="customizer__label"><label>Select theme</label></div>
       <a-select
