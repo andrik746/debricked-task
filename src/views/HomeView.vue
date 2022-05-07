@@ -1,7 +1,7 @@
 <script setup>
-import ScannerUploader from "@/components/ScannerUploader.vue";
-import ScannerProgress from "@/components/ScannerProgress.vue";
-import ScannerResult from "@/components/ScannerResult.vue";
+import ScannerUploader from "@/components/scanner/ScannerUploader.vue";
+import ScannerProgress from "@/components/scanner/ScannerProgress.vue";
+import ScannerResult from "@/components/scanner/ScannerResult.vue";
 </script>
 
 <script>
