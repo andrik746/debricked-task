@@ -4,7 +4,7 @@ import handleError from "@/utils/handleError";
 
 export default {
   name: "LoginSimulator",
-  emits: ['login'],
+  emits: ["login"],
   data() {
     return {
       loginLoading: false,
@@ -24,9 +24,8 @@ export default {
         const response = await simulateLoginRequest();
         if (response.data?.token) {
           localStorage.setItem("token", response.data.token);
-          this.$emit('login')
+          this.$emit("login");
         }
-          
       } catch (e) {
         // todo: we could add a warning if the login failes
         handleError(e);
