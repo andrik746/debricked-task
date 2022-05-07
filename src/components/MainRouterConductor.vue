@@ -9,6 +9,7 @@ export default {
   components: { LoginSimulator },
   data() {
     return {
+      isLogged: false,
       results: [], // results on top level to keep them alive when traveling between pages
     };
   },
@@ -26,6 +27,6 @@ export default {
 };
 </script>
 <template>
-  <LoginSimulator />
-  <RouterView :results="results" />
+  <LoginSimulator @login="isLogged = true" />
+  <RouterView v-if="isLogged" :results="results" />
 </template>

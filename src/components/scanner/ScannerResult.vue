@@ -48,6 +48,7 @@ export default {
 </template>
 
 <style>
+/* we can't use 'scoped' when editing components of the ui library */
 .scanner-results .ant-table {
   background: var(--background-lighter);
   font-size: var(--font-size);
