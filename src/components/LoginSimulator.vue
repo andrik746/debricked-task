@@ -3,14 +3,14 @@ import { simulateLoginRequest } from "@/services/LoginService";
 import handleError from "@/utils/handleError";
 
 export default {
-  name: 'LoginSimulator',
+  name: "LoginSimulator",
   data() {
     return {
-      loginLoading: false
+      loginLoading: false,
     };
   },
-  mounted () {
-    this.simulateLogin()
+  mounted() {
+    this.simulateLogin();
   },
   methods: {
     async simulateLogin() {
@@ -30,8 +30,8 @@ export default {
         this.loginLoading = false;
       }
     },
-  }
-}
+  },
+};
 </script>
 <template>
   <div class="login-simulator" v-if="loginLoading">

@@ -53,7 +53,9 @@ export default {
 </script>
 <template>
   <div class="scanner-uploader">
-    <h3 class="mb-1">Upload your dependency file to scan for vulnerabilities</h3>
+    <h3 class="mb-1">
+      Upload your dependency file to scan for vulnerabilities
+    </h3>
 
     <a-upload :showUploadList="false" :before-upload="addCustomUpload">
       <a-button :disabled="uploading" :loading="uploading">

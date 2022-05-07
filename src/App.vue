@@ -3,13 +3,13 @@ import MainHeader from "@/components/MainHeader.vue";
 import MainRouterConductor from "@/components/MainRouterConductor.vue";
 import MainFooter from "@/components/MainFooter.vue";
 
-import initUserStyles from '@/utils/initUserStyles'
+import initUserStyles from "@/utils/initUserStyles";
 
 export default {
   components: {
     MainHeader,
     MainRouterConductor,
-    MainFooter
+    MainFooter,
   },
   mounted() {
     initUserStyles();
@@ -37,8 +37,4 @@ export default {
 @import "ant-design-vue/lib/spin/style/index.css";
 @import "ant-design-vue/lib/table/style/index.css";
 @import "ant-design-vue/lib/message/style/index.css";
-</style>
-
-<style scoped>
-
 </style>

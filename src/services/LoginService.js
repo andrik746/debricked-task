@@ -5,7 +5,7 @@ export const simulateLoginRequest = async () => {
   const hardcodedUsername = localStorage.getItem("username");
   const hardcodedPassword = localStorage.getItem("password");
   if (!hardcodedUsername || !hardcodedPassword) {
-    console.error("Please, add password and username to the local storage");
+    console.error("Please, add password and username to the local storage and try again");
     return;
   }
 

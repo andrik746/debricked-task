@@ -4,7 +4,6 @@ export default {
   props: {
     results: {
       type: Array,
-      default: () => [],
       required: true,
     },
   },

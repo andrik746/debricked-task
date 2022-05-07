@@ -1,17 +1,16 @@
 <script setup>
 import { RouterView } from "vue-router";
 import LoginSimulator from "@/components/LoginSimulator.vue";
-
 </script>
 
 <script>
 export default {
-  name: 'MainRouterConductor',
-  components: {LoginSimulator},
-  data () {
+  name: "MainRouterConductor",
+  components: { LoginSimulator },
+  data() {
     return {
-      results: [] // results on top level to keep them alive when traveling between pages
-    }
+      results: [], // results on top level to keep them alive when traveling between pages
+    };
   },
   mounted() {
     this.emitter.on("new-result", this.handleNewResult);
@@ -23,8 +22,8 @@ export default {
     handleNewResult(result) {
       this.results.push(result);
     },
-  }
-}
+  },
+};
 </script>
 <template>
   <LoginSimulator />

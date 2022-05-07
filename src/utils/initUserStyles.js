@@ -1,6 +1,6 @@
 export default () => {
-  if (!document) return
-  
+  if (!document) return;
+
   document.documentElement.setAttribute(
     "theme",
     localStorage.getItem("theme") || "light"
@@ -9,4 +9,4 @@ export default () => {
     "font",
     localStorage.getItem("font") || "medium"
   );
-}
+};

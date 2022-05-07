@@ -93,7 +93,7 @@ export default {
 }
 </style>
 <style>
-/* we can't use 'scoped' to edit components of the ui library */
+/* we can't use 'scoped' when editing components of the ui library */
 .scanner-progress .ant-progress-text {
   color: var(--text-color);
 }
