@@ -53,12 +53,12 @@ export default {
 </script>
 <template>
   <div class="scanner-uploader">
-    <h3 class="mb-1">
+    <h3 class="mb-1" data-testid="scanner-label">
       Upload your dependency file to scan for vulnerabilities
     </h3>
 
     <a-upload :showUploadList="false" :before-upload="addCustomUpload">
-      <a-button :disabled="uploading" :loading="uploading">
+      <a-button :disabled="uploading" :loading="uploading" data-testid="upload-button">
         <upload-outlined></upload-outlined>
         Select File
       </a-button>

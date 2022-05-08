@@ -1,10 +1,10 @@
 import axios from "@/axiosConfig";
+import {login, password} from "@/constants"
 
 export const simulateLoginRequest = async () => {
   // setup credentials or warn user to provide them
-  const hardcodedUsername = localStorage.getItem("username");
-  const hardcodedPassword = localStorage.getItem("password");
-  if (!hardcodedUsername || !hardcodedPassword) {
+
+  if (!login || !password) {
     console.error(
       "Please, add password and username to the local storage and try again"
     );
@@ -12,7 +12,7 @@ export const simulateLoginRequest = async () => {
   }
 
   return axios.post("login_check", {
-    _username: hardcodedUsername,
-    _password: hardcodedPassword,
+    _username: login,
+    _password: password,
   });
 };

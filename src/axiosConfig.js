@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const baseURL = "localhost:8081/api/";
+import {requestURL} from '@/constants'
 
 const axiosConfig = axios.create({
-  baseURL: `http://${baseURL}`,
+  baseURL: `http://${requestURL}`,
 });
 
 // add token to each request

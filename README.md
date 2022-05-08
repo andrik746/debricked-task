@@ -15,8 +15,3 @@ https://github.com/debricked/cors-proxy
 ```sh
 npm run dev
 ```
-
-## Uusername and Password Setup
-For example, for Google Chrome go to:
-Developer tools/Application/Local storage/localhost:8080/
-Then add your username and password for debricked.com

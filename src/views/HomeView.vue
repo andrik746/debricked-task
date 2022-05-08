@@ -33,7 +33,7 @@ export default {
 
 <template>
   <main>
-    <h1>Scanner</h1>
+    <h1 data-testid="scanner-header">Scanner</h1>
 
     <!-- we use v-show to keep components alive -->
     <ScannerUploader v-show="showUploader" />

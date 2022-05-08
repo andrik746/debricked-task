@@ -34,8 +34,8 @@ export default {
     />
 
     <nav>
-      <RouterLink to="/">Scanner</RouterLink>
-      <RouterLink to="/customizer">Customizer</RouterLink>
+      <RouterLink to="/" data-testid="nav-link-scanner">Scanner</RouterLink>
+      <RouterLink to="/customizer" data-testid="nav-link-customizer">Customizer</RouterLink>
     </nav>
   </header>
 </template>

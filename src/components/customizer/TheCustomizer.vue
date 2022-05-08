@@ -23,12 +23,13 @@ export default {
 
 <template>
   <div class="customizer">
-    <h1>Customizer</h1>
-    <h3>You can customise a look of the application here</h3>
+    <h1 data-testid="customizer-header">Customizer</h1>
+    <h3 data-testid="customizer-label">You can customise a look of the application here</h3>
     <div class="customizer__section mt-1">
-      <div class="customizer__label"><label>Select theme</label></div>
+      <div class="customizer__label" data-testid="theme-label"><label>Select theme</label></div>
       <a-select
         class="customizer__select"
+         data-testid="theme-select"
         :value="theme"
         @change="(value) => handleChange(value, 'theme')"
       >
@@ -38,9 +39,10 @@ export default {
     </div>
 
     <div class="customizer__section">
-      <div class="customizer__label"><label>Select font-size</label></div>
+      <div class="customizer__label"  data-testid="font-label"><label>Select font-size</label></div>
       <a-select
         class="customizer__select"
+        data-testid="font-select"
         :value="font"
         @change="(value) => handleChange(value, 'font')"
       >
