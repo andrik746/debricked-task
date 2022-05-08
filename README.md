@@ -15,3 +15,8 @@ https://github.com/debricked/cors-proxy
 ```sh
 npm run dev
 ```
+## Run Tests
+
+```sh
+npx cypress open
+```
