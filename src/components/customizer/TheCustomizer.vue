@@ -29,7 +29,7 @@ export default {
       <div class="customizer__label" data-testid="theme-label"><label>Select theme</label></div>
       <a-select
         class="customizer__select"
-         data-testid="theme-select"
+        data-testid="theme-select"
         :value="theme"
         @change="(value) => handleChange(value, 'theme')"
       >
