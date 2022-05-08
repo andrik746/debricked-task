@@ -40,6 +40,7 @@ export default {
   <div class="scanner-results mt-1">
     <a-table
       v-if="results.length"
+      data-testid="results-table"
       :dataSource="dataSource"
       :columns="columns"
       :pagination="false"

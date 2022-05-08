@@ -52,7 +52,7 @@ export default {
 };
 </script>
 <template>
-  <div class="scanner-uploader">
+  <div class="scanner-uploader" data-testid="scanner-uploader">
     <h3 class="mb-1" data-testid="scanner-label">
       Upload your dependency file to scan for vulnerabilities
     </h3>

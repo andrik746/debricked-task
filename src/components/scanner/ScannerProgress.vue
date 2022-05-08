@@ -78,7 +78,7 @@ export default {
 </script>
 
 <template>
-  <div class="scanner-progress">
+  <div class="scanner-progress" data-testid="scanner-progress">
     <div class="inline-block mb-1/2">
       <a-spin v-if="!isScanningCompleted" class="scanner-progress__loader" />
       <h3 class="inline-block">{{ status }}</h3>

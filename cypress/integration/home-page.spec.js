@@ -1,16 +1,8 @@
 /// <reference types="cypress" />
 
 import { siteURL } from '../../src/constants'
-import { login, password } from '../../src/constants'
 
 describe('home-page', () => {
-  before(() => {
-    cy.then(() => {
-      window.localStorage.setItem('username', login)
-      window.localStorage.setItem('password', password)
-    })
-  })
-
   beforeEach(() => {
     cy.visit('http://' + siteURL)
   })
