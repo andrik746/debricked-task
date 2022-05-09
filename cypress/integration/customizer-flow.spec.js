@@ -2,7 +2,7 @@
 
 import { siteURL } from '../../src/constants'
 
-describe('upload-flow', () => {
+describe('customizer-flow', () => {
   
   beforeEach(() => {
     cy.visit('http://' + siteURL + 'customizer')
